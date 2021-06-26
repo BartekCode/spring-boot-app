@@ -1,0 +1,14 @@
+spring:
+  h2:
+    console:
+      enabled: true
+      path: '/console'
+  datasource:
+    url: 'jdbc:h2:file:C:\Users\Bartekk\Desktop\springApp\ciekawostki-db'
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+  flyway:
+    enabled: false
+
