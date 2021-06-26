@@ -17,8 +17,8 @@ import javax.validation.constraints.NotEmpty;
 public class Discovery {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
     @NotEmpty
     private String title;
     @NotEmpty
