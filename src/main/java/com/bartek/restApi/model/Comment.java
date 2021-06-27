@@ -6,29 +6,25 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
-
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
+@Table(name = "comments")
 @Getter
-@EqualsAndHashCode
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString
-@Table(name = "discoveries")
-public class Discovery {
+@EqualsAndHashCode
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @NotEmpty
-    private String title;
+    private LocalDateTime dateAdded;
     @NotEmpty
     private String description;
-    private String url;
-    private LocalDateTime dateAdded;
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @JoinColumn(name = "discovery_id")
+    private Discovery discovery;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
