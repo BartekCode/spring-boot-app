@@ -3,6 +3,7 @@ package com.bartek.restApi.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
@@ -20,7 +21,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private LocalDateTime dateAdded;
-    @NotEmpty
+    @NotBlank
     private String description;
     @ManyToOne
     @JoinColumn(name = "discovery_id")

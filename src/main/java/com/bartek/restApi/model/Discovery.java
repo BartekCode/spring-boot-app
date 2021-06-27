@@ -3,6 +3,7 @@ package com.bartek.restApi.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
@@ -20,9 +21,9 @@ public class Discovery {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @NotEmpty
+    @NotBlank
     private String title;
-    @NotEmpty
+    @NotBlank(message = "Discovery's descritpion must be not null")
     private String description;
     private String url;
     private LocalDateTime dateAdded;
