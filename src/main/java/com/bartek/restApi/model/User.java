@@ -1,6 +1,7 @@
 package com.bartek.restApi.model;
 
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -26,11 +27,12 @@ public class User {
     @Email
     private String email;
     @NotEmpty
-    private String password;
+     //Jackson’s @JsonIgnore is used to prevent the password field from being serialized into JSON.
+    @JsonIgnore private String password;
     @Enumerated
     private Role role;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<Discovery> discoveirs;
+    private Set<Discovery> discoveries;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Comment> comments;
 

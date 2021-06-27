@@ -8,20 +8,20 @@ import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "comments")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
+@Table(name = "comments")
 public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private LocalDateTime dateAdded;
-    @NotBlank
+    @NotBlank(message = "Comments's descritpion must be not empty")
     private String description;
     @ManyToOne
     @JoinColumn(name = "discovery_id")

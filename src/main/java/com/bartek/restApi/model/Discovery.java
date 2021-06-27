@@ -21,9 +21,9 @@ public class Discovery {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @NotBlank
+    @NotBlank(message = "Discovery's title must be not empty")
     private String title;
-    @NotBlank(message = "Discovery's descritpion must be not null")
+    @NotBlank(message = "Discovery's descritpion must be not empty")
     private String description;
     private String url;
     private LocalDateTime dateAdded;

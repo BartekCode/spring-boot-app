@@ -8,19 +8,19 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 @Entity
+@Table(name ="categories")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-@Table(name = "categorys")
 public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @NotBlank
+    @NotBlank(message = "Category's name must be not empty")
     private String name;
     private String description;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")

@@ -22,7 +22,7 @@ public class RestApiApplication implements RepositoryRestConfigurer {
 		return new LocalValidatorFactoryBean();
 	}
 
-	@Override
+	@Override //Assigning Validators Manually
 	public void configureValidatingRepositoryEventListener(ValidatingRepositoryEventListener validatingListener) {
 		validatingListener.addValidator("beforeCreate", validator());
 		validatingListener.addValidator("beforeSave", validator());
