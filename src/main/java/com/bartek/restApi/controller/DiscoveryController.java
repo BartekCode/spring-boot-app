@@ -4,17 +4,14 @@ import com.bartek.restApi.model.Discovery;
 import com.bartek.restApi.repository.DiscoveryRepository;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
-@RepositoryRestController
+@RestController //Controller + ResponseBody , kazda metoda zwraca Response body czyli kazdy wynik metody bedzie mapowane w JSON
 public class DiscoveryController {
 
     private static final Logger logger = LoggerFactory.getLogger(DiscoveryController.class);
@@ -23,10 +20,16 @@ public class DiscoveryController {
     public DiscoveryController(DiscoveryRepository discoveryRepository) {
         this.discoveryRepository = discoveryRepository;
     }
-    @GetMapping("/discoveries")
+    @GetMapping(value = "/discoveries", params = {"!sort", "!page", "!size"})
     ResponseEntity <List<Discovery>> readAllDiscoveries(){
         logger.warn("Exposing all discoveries");
         return ResponseEntity.ok(discoveryRepository.findAll());
     }
+    @GetMapping(value = "/discoveries")
+    ResponseEntity <List<Discovery>> readAllDiscoveries(Pageable pageable){
+        logger.info("Custom pageable");
+        return ResponseEntity.ok(discoveryRepository.findAll(pageable).getContent());
+    }
+
 
 }
