@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -31,5 +32,16 @@ public class DiscoveryController {
         return ResponseEntity.ok(discoveryRepository.findAll(pageable).getContent());
     }
 
+    @PutMapping("/discoveries/{id}")//Requestbody to co dostaniemy zdeserializuj na obiekt javovy
+    ResponseEntity<?> updateTask(@PathVariable("id") Long id, @RequestBody @Valid Discovery toUpdate){
+        if (!discoveryRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+            toUpdate.setId(id);//zapisujemy set id na podany i zapisujemy w repo
+            discoveryRepository.save(toUpdate);
+            return ResponseEntity.noContent().build();
+        }
+    }
 
-}
+
+
