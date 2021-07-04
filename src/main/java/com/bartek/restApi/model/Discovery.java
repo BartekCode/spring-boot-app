@@ -1,13 +1,9 @@
 package com.bartek.restApi.model;
 
 import lombok.*;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import java.time.LocalDateTime;
 
 
 @Entity
@@ -18,7 +14,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @ToString
 @Table(name = "discoveries")
-public class Discovery {
+public class Discovery{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,8 +25,7 @@ public class Discovery {
     private String description;
     private String url;
     private boolean done;
-    private LocalDateTime dateAdded;
-    private LocalDateTime updatedOn;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -38,14 +33,9 @@ public class Discovery {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @PrePersist
-    void prePersist(){
-        dateAdded = LocalDateTime.now(); //czyli data dodania to aktualna data
-    }
-    @PreUpdate
-    void preUpdate(){
-        updatedOn = LocalDateTime.now();
-    }
+    @Embedded
+    private Audit audit = new Audit();
+
 
     public void updateFrom(final Discovery source){
         title = source.title;

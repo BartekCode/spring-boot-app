@@ -46,6 +46,7 @@ public class DiscoveryController {
             discoveryRepository.save(toUpdate);// TAK MUSIMY ZAPISAC GDYBY NIE BYLO ADNOTACJI @Transactional
             return ResponseEntity.noContent().build();
         }
+        //TO DO PO UPDATE ZAPISUJE 2 RAZY NOWY OBIEKT NAPRAWIC !
 
 
         @PostMapping("/discoveries")
