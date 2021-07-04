@@ -1,6 +1,8 @@
 package com.bartek.restApi.model;
 
 import lombok.*;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -33,4 +35,6 @@ public class Discovery {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+
 }

@@ -8,8 +8,14 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-  flyway:
-    enabled: false
+    show-sql: true
+  #  flyway:
+#    enabled: false
+  my.prop : 'test'
+discovery:
+  allow-multiple-discoveries-from-template: false
+#szablon do tworzenia wiekszej liczy discovery na raz póki co na false(jest to nasze property)
+
 
 
 

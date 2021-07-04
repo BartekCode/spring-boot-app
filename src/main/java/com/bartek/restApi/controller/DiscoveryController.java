@@ -2,13 +2,14 @@ package com.bartek.restApi.controller;
 
 import com.bartek.restApi.model.Discovery;
 import com.bartek.restApi.repository.DiscoveryRepository;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 
@@ -40,6 +41,12 @@ public class DiscoveryController {
             toUpdate.setId(id);//zapisujemy set id na podany i zapisujemy w repo
             discoveryRepository.save(toUpdate);
             return ResponseEntity.noContent().build();
+        }
+
+        @PostMapping("/discoveries")
+    ResponseEntity<Discovery> createDiscovery(@RequestBody @Valid Discovery toCreate){
+            Discovery save = discoveryRepository.save(toCreate);
+            return ResponseEntity.created(URI.create("/"+save.getId())).body(save);
         }
     }
 
