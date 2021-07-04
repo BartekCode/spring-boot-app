@@ -4,5 +4,5 @@ create table discoveries(
     title varchar (100) not null ,
     description varchar (200) not null ,
     url varchar (100),
-    date_added date
+    done bit
 )

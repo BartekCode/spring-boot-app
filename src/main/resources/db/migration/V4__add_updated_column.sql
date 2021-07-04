@@ -1,0 +1,1 @@
+alter table discoveries add column updated_on datetime null;

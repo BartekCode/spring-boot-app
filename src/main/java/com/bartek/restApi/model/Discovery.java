@@ -28,7 +28,9 @@ public class Discovery {
     @NotBlank(message = "Discovery's descritpion must be not empty")
     private String description;
     private String url;
+    private boolean done;
     private LocalDateTime dateAdded;
+    private LocalDateTime updatedOn;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -36,5 +38,19 @@ public class Discovery {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @PrePersist
+    void prePersist(){
+        dateAdded = LocalDateTime.now(); //czyli data dodania to aktualna data
+    }
+    @PreUpdate
+    void preUpdate(){
+        updatedOn = LocalDateTime.now();
+    }
+
+    public void updateFrom(final Discovery source){
+        title = source.title;
+        description = source.description;
+        done = source.done;
+    }
 
 }

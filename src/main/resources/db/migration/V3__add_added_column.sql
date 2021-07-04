@@ -1,0 +1,1 @@
+alter table discoveries add column date_added datetime null;

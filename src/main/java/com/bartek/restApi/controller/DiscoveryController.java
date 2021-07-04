@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,20 +34,36 @@ public class DiscoveryController {
         return ResponseEntity.ok(discoveryRepository.findAll(pageable).getContent());
     }
 
+    @Transactional
     @PutMapping("/discoveries/{id}")//Requestbody to co dostaniemy zdeserializuj na obiekt javovy
     ResponseEntity<?> updateTask(@PathVariable("id") Long id, @RequestBody @Valid Discovery toUpdate){
         if (!discoveryRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
-            toUpdate.setId(id);//zapisujemy set id na podany i zapisujemy w repo
-            discoveryRepository.save(toUpdate);
+        discoveryRepository.findById(id)
+                .ifPresent(discovery -> discovery.updateFrom(toUpdate));
+//            toUpdate.setId(id);//zapisujemy set id na podany i zapisujemy w repo
+            discoveryRepository.save(toUpdate);// TAK MUSIMY ZAPISAC GDYBY NIE BYLO ADNOTACJI @Transactional
             return ResponseEntity.noContent().build();
         }
+
 
         @PostMapping("/discoveries")
     ResponseEntity<Discovery> createDiscovery(@RequestBody @Valid Discovery toCreate){
             Discovery save = discoveryRepository.save(toCreate);
             return ResponseEntity.created(URI.create("/"+save.getId())).body(save);
+        }
+
+        @Transactional //ta zmiana zostanie zacommitowana do bazy danych
+        @PatchMapping("discoveries/{id}")
+    public ResponseEntity<?> toggleDiscovery(@PathVariable long id){
+        if (!discoveryRepository.existsById(id)){
+            return ResponseEntity.notFound().build();
+        }
+        discoveryRepository.findById(id)
+                .ifPresent(discovery -> discovery.setDone(!discovery.isDone())); //zmieniamy na przeciwny niz jest,
+            // commit do bazy pójdzie juz ze zmienionym added
+        return ResponseEntity.noContent().build();
         }
     }
 
