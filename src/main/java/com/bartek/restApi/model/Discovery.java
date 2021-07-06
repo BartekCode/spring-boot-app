@@ -25,14 +25,12 @@ public class Discovery{
     private String description;
     private String url;
     private boolean done;
-
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
     @Embedded
     private Audit audit = new Audit();
 
@@ -41,6 +39,7 @@ public class Discovery{
         title = source.title;
         description = source.description;
         done = source.done;
+        category = source.category;
     }
 
 }

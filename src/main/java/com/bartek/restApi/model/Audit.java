@@ -7,7 +7,7 @@ import javax.persistence.PreUpdate;
 import java.time.LocalDateTime;
 
 @Embeddable //klasa osadzalna w innych miejscach
-//@MappedSuperclass //klasa bazowa dla encji
+//@MappedSuperclass //klasa bazowa dla encji WTEDY musielibysmy o nią rozszerzac wybrane klasy
 public class Audit {
 
     private LocalDateTime dateAdded;

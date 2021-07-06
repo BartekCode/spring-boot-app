@@ -15,6 +15,7 @@ public interface DiscoveryRepository {
     List<Discovery> findAll();
     Optional<Discovery> findById(Long id);
     Discovery save(Discovery entity);
+    boolean existsByDoneIsFalseAndCategory_Id(Long id);
     Page<Discovery> findAll(Pageable pageable);
     boolean existsById(Long id);
 }

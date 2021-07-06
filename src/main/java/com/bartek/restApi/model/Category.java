@@ -23,10 +23,8 @@ public class Category {
     @NotBlank(message = "Category's name must be not empty")
     private String name;
     private String description;
-
     @Embedded
     private Audit audit;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private Set<Discovery> discoveries;
 }
