@@ -23,6 +23,7 @@ public class Category {
     @NotBlank(message = "Category's name must be not empty")
     private String name;
     private String description;
+    private boolean done;
     @Embedded
     private Audit audit;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")

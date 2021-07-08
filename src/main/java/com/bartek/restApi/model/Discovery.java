@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -25,6 +26,7 @@ public class Discovery{
     private String description;
     private String url;
     private boolean done;
+    private LocalDateTime dateAdded;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -34,6 +36,20 @@ public class Discovery{
     @Embedded
     private Audit audit = new Audit();
 
+
+    public Discovery(@NotBlank(message = "Discovery's title must be not empty") String title, @NotBlank(message = "Discovery's descritpion must be not empty") String description, String url, LocalDateTime dateAdded) {
+        this.title = title;
+        this.description = description;
+        this.url = url;
+        this.dateAdded = dateAdded;
+    }
+
+    public Discovery(@NotBlank(message = "Discovery's title must be not empty") String title, @NotBlank(message = "Discovery's descritpion must be not empty") String description, String url, boolean done) {
+        this.title = title;
+        this.description = description;
+        this.url = url;
+        this.done = done;
+    }
 
     public void updateFrom(final Discovery source){
         title = source.title;
