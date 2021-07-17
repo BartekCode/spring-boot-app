@@ -11,8 +11,8 @@ import org.springframework.web.context.annotation.RequestScope;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
-@RequestScope
+//@Service zrobilismy wstrzykniecie tego service w LogicConfiguration przez  @Bean
+//@RequestScope
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
@@ -41,5 +41,6 @@ public class CategoryService {
        Category result = categoryRepository.findById(categoryId)
                .orElseThrow(() -> new IllegalArgumentException("Category with given id not found!"));
         result.setDone(!result.isDone()); //odwracamy Done
+        categoryRepository.save(result);
     }
 }
