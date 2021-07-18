@@ -1,1 +1,1 @@
-alter table discoveries add column date_added datetime null;
+alter table discoveries add column date_add datetime null;

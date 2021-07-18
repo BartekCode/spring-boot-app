@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,9 +18,9 @@ public class CategoryWriteModel {
 
     private String name;
     private String description;
-    private Set<CategoryDiscoveryWriteModel> discoveries; //discovery do zapisu
+    private Set <CategoryDiscoveryWriteModel> discoveries; //discovery do zapisu
 
-    public Category toCategpry(){
+    public Category toCategory(){
         var result = new Category();
         result.setName(name);
         result.setDescription(description);

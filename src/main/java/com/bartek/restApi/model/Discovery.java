@@ -1,5 +1,6 @@
 package com.bartek.restApi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,7 +27,8 @@ public class Discovery{
     private String description;
     private String url;
     private boolean done;
-    private LocalDateTime dateAdded;
+    private LocalDateTime dateAdd;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -37,11 +39,11 @@ public class Discovery{
     private Audit audit = new Audit();
 
 
-    public Discovery(@NotBlank(message = "Discovery's title must be not empty") String title, @NotBlank(message = "Discovery's descritpion must be not empty") String description, String url, LocalDateTime dateAdded) {
+    public Discovery(@NotBlank(message = "Discovery's title must be not empty") String title, @NotBlank(message = "Discovery's descritpion must be not empty") String description, String url, LocalDateTime dateAdd) {
         this.title = title;
         this.description = description;
         this.url = url;
-        this.dateAdded = dateAdded;
+        this.dateAdd = dateAdd;
     }
 
     public Discovery(@NotBlank(message = "Discovery's title must be not empty") String title, @NotBlank(message = "Discovery's descritpion must be not empty") String description, String url, boolean done) {

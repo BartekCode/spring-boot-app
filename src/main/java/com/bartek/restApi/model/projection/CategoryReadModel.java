@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -18,16 +17,18 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class CategoryReadModel { //jak pwoinna wygladac odczytywana grupa
 
+    private long id;
     private String name;
     private String description;
     private LocalDateTime dateAdded; //ostatni dodany Discovery
     private Set<CategoryDiscoveryReadModel> discoveries;
 
     public CategoryReadModel(Category source){
+        id = source.getId();
         name= source.getName();
         description = source.getDescription();
         source.getDiscoveries().stream()
-                .map(Discovery::getDateAdded)
+                .map(Discovery::getDateAdd)
                 .max(LocalDateTime::compareTo)
                 .ifPresent(dateTime -> dateAdded = dateTime);
         discoveries = source.getDiscoveries().stream()

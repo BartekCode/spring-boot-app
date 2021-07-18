@@ -1,9 +1,12 @@
 package com.bartek.restApi.controller;
 
+import com.bartek.restApi.logic.DiscoveryService;
 import com.bartek.restApi.model.Discovery;
+import com.bartek.restApi.model.projection.CategoryDiscoveryReadModel;
 import com.bartek.restApi.repository.DiscoveryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,9 +22,11 @@ public class DiscoveryController {
 
     private static final Logger logger = LoggerFactory.getLogger(DiscoveryController.class);
     private final DiscoveryRepository discoveryRepository;
+    private final DiscoveryService discoveryService;
 
-    public DiscoveryController(DiscoveryRepository discoveryRepository) {
+    public DiscoveryController(@Lazy final DiscoveryRepository discoveryRepository, DiscoveryService discoveryService) {
         this.discoveryRepository = discoveryRepository;
+        this.discoveryService = discoveryService;
     }
     @GetMapping(value = "/discoveries", params = {"!sort", "!page", "!size"})
     ResponseEntity <List<Discovery>> readAllDiscoveries(){
@@ -36,7 +41,7 @@ public class DiscoveryController {
 
     @Transactional
     @PutMapping("/discoveries/{id}")//Requestbody to co dostaniemy zdeserializuj na obiekt javovy
-    ResponseEntity<?> updateTask(@PathVariable("id") Long id, @RequestBody @Valid Discovery toUpdate){
+    ResponseEntity<?> updateDiscovery(@PathVariable("id") Long id, @RequestBody @Valid Discovery toUpdate){
         if (!discoveryRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
@@ -65,6 +70,15 @@ public class DiscoveryController {
                 .ifPresent(discovery -> discovery.setDone(!discovery.isDone())); //zmieniamy na przeciwny niz jest,
             // commit do bazy pójdzie juz ze zmienionym added
         return ResponseEntity.noContent().build();
+        }
+
+        @Transactional
+        @PostMapping("discoveries/{id}")
+        ResponseEntity<Discovery> createAndAddDiscoveryToSpecificCategory(@PathVariable long id, @RequestBody CategoryDiscoveryReadModel categoryDiscoveryReadModel) throws Exception {
+            Discovery discovery = discoveryService.discoveryMapper(categoryDiscoveryReadModel);
+            Discovery discovery1 = discoveryService.addDiscovery(discovery, id);
+            discoveryRepository.save(discovery);
+            return ResponseEntity.created(URI.create("/"+discovery1.getId())).body(discovery1);
         }
     }
 

@@ -5,8 +5,6 @@ import com.bartek.restApi.model.projection.CategoryReadModel;
 import com.bartek.restApi.model.projection.CategoryWriteModel;
 import com.bartek.restApi.repository.CategoryRepository;
 import com.bartek.restApi.repository.DiscoveryRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.RequestScope;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +22,7 @@ public class CategoryService {
     }
 
     public CategoryReadModel createCategory(CategoryWriteModel source){
-        Category result = categoryRepository.save(source.toCategpry());//uzywamy naszego mappera toCategory zamieniamy CategoryWriteModel na Category
+        Category result = categoryRepository.save(source.toCategory());//uzywamy naszego mappera toCategory zamieniamy CategoryWriteModel na Category
         return new CategoryReadModel(result);
     }
 

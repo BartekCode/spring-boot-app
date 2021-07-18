@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
@@ -21,6 +20,7 @@ public class CategoryDiscoveryWriteModel { //discovery w obrębie kategorii
     private LocalDateTime dateAdded;
 
     public Discovery toDiscovery(){
+
         return new Discovery(title,description,url, dateAdded);
     }
 
