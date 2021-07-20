@@ -5,4 +5,5 @@ create table categories(
 );
 
 alter table discoveries add column category_id int null;
-alter table discoveries add foreign key (category_id) references categories (id) ;
+alter table discoveries add foreign key (category_id) references categories (id);
+

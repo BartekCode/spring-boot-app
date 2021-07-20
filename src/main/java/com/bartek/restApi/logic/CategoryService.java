@@ -32,13 +32,13 @@ public class CategoryService {
                 .collect(Collectors.toList()); //i tworzymy liste
     }
 
-    public  void toggleCategory(long categoryId){
-        if (discoveryRepository.existsByDoneIsFalseAndCategory_Id(categoryId)){
-            throw new  IllegalStateException("Category hase undone discovery. Done all discovery first");
-        }
-       Category result = categoryRepository.findById(categoryId)
-               .orElseThrow(() -> new IllegalArgumentException("Category with given id not found!"));
-        result.setDone(!result.isDone()); //odwracamy Done
-        categoryRepository.save(result);
-    }
+//    public  void toggleCategory(long categoryId){
+//        if (discoveryRepository.existsByDoneIsFalseAndCategory_Id(categoryId)){
+//            throw new  IllegalStateException("Category hase undone discovery. Done all discovery first");
+//        }
+//       Category result = categoryRepository.findById(categoryId)
+//               .orElseThrow(() -> new IllegalArgumentException("Category with given id not found!"));
+//        result.setDone(!result.isDone()); //odwracamy Done
+//        categoryRepository.save(result);
+//    }
 }

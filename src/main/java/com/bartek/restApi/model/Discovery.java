@@ -19,8 +19,8 @@ import java.time.LocalDateTime;
 public class Discovery{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     @NotBlank(message = "Discovery's title must be not empty")
     private String title;
     @NotBlank(message = "Discovery's descritpion must be not empty")

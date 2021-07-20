@@ -18,8 +18,8 @@ import java.util.Set;
 @EqualsAndHashCode
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     @NotEmpty
     private String firstName;
     @NotEmpty
@@ -30,7 +30,9 @@ public class User {
      //Jackson’s @JsonIgnore is used to prevent the password field from being serialized into JSON.
     @JsonIgnore
     private String password;
-    @Enumerated
+    @Enumerated()
+//    @Column(name = "role",columnDefinition = "enum('USER','ADMIN')")
+    @Column(columnDefinition = "enum")
     private Role role;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Discovery> discoveries;

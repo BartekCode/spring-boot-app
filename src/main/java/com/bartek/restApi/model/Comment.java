@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 public class Comment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private LocalDateTime dateAdded;
     @NotBlank(message = "Comments's descritpion must be not empty")
     private String description;
