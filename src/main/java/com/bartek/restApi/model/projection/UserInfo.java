@@ -1,10 +1,15 @@
 package com.bartek.restApi.model.projection;
 
-import lombok.Value;
+import lombok.*;
 
-@Value
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserInfo {
-    String firstName;
-    String lastName;
-    String email;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
 }

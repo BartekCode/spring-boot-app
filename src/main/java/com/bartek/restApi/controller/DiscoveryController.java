@@ -18,6 +18,7 @@ import java.util.List;
 
 
 @RestController //Controller + ResponseBody , kazda metoda zwraca Response body czyli kazdy wynik metody bedzie mapowane w JSON
+@RequestMapping("/discoveries")
 public class DiscoveryController {
 
     private static final Logger logger = LoggerFactory.getLogger(DiscoveryController.class);
@@ -28,7 +29,7 @@ public class DiscoveryController {
         this.discoveryRepository = discoveryRepository;
         this.discoveryService = discoveryService;
     }
-    @GetMapping(value = "/discoveries", params = {"!sort", "!page", "!size"})
+    @GetMapping( params = {"!sort", "!page", "!size"})
     ResponseEntity <List<Discovery>> readAllDiscoveries(){
         logger.warn("Exposing all discoveries");
         return ResponseEntity.ok(discoveryRepository.findAll());
@@ -40,7 +41,7 @@ public class DiscoveryController {
     }
 
     @Transactional
-    @PutMapping("/discoveries/{id}")//Requestbody to co dostaniemy zdeserializuj na obiekt javovy
+    @PutMapping("/{id}")//Requestbody to co dostaniemy zdeserializuj na obiekt javovy
     ResponseEntity<?> updateDiscovery(@PathVariable("id") Long id, @RequestBody @Valid Discovery toUpdate){
         if (!discoveryRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
@@ -54,14 +55,14 @@ public class DiscoveryController {
         //TO DO PO UPDATE ZAPISUJE 2 RAZY NOWY OBIEKT NAPRAWIC !
 
 
-        @PostMapping("/discoveries")
+        @PostMapping
     ResponseEntity<Discovery> createDiscovery(@RequestBody @Valid Discovery toCreate){
             Discovery save = discoveryRepository.save(toCreate);
             return ResponseEntity.created(URI.create("/"+save.getId())).body(save);
         }
 
         @Transactional //ta zmiana zostanie zacommitowana do bazy danych
-        @PatchMapping("discoveries/{id}")
+        @PatchMapping("/{id}")
     public ResponseEntity<?> toggleDiscovery(@PathVariable long id){
         if (!discoveryRepository.existsById(id)){
             return ResponseEntity.notFound().build();
@@ -73,7 +74,7 @@ public class DiscoveryController {
         }
 
         @Transactional
-        @PostMapping("discoveries/{id}")
+        @PostMapping("/{id}")
         ResponseEntity<Discovery> createAndAddDiscoveryToSpecificCategory(@PathVariable long id, @RequestBody CategoryDiscoveryReadModel categoryDiscoveryReadModel) throws Exception {
             Discovery discovery = discoveryService.discoveryMapper(categoryDiscoveryReadModel);
             Discovery discovery1 = discoveryService.addDiscovery(discovery, id);
