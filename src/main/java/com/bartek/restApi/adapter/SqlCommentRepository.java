@@ -1,15 +1,19 @@
-package com.bartek.restApi.repository;
+package com.bartek.restApi.adapter;
 
 import com.bartek.restApi.model.Comment;
+import com.bartek.restApi.repository.CommentRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface CommentRepository extends JpaRepository <Comment, Long> {
+public interface SqlCommentRepository extends CommentRepository, JpaRepository<Comment, Long> {
 
+    @Override
     Comment save(Comment toSave);
+
+    @Override
     void deleteById(int id);
+
+    @Override
     List<Comment> findAllById(int id);
 }

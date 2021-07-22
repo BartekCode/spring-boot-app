@@ -42,7 +42,7 @@ public class DiscoveryController {
 
     @Transactional
     @PutMapping("/{id}")//Requestbody to co dostaniemy zdeserializuj na obiekt javovy
-    ResponseEntity<?> updateDiscovery(@PathVariable("id") Long id, @RequestBody @Valid Discovery toUpdate){
+    ResponseEntity<?> updateDiscovery(@PathVariable("id") int id, @RequestBody @Valid Discovery toUpdate){
         if (!discoveryRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
@@ -63,7 +63,7 @@ public class DiscoveryController {
 
         @Transactional //ta zmiana zostanie zacommitowana do bazy danych
         @PatchMapping("/{id}")
-    public ResponseEntity<?> toggleDiscovery(@PathVariable long id){
+    public ResponseEntity<?> toggleDiscovery(@PathVariable int id){
         if (!discoveryRepository.existsById(id)){
             return ResponseEntity.notFound().build();
         }

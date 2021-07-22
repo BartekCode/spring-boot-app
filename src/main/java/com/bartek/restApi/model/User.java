@@ -30,8 +30,7 @@ public class User {
      //Jackson’s @JsonIgnore is used to prevent the password field from being serialized into JSON.
     @JsonIgnore
     private String password;
-    @Enumerated()
-//    @Column(name = "role",columnDefinition = "enum('USER','ADMIN')")
+    @Enumerated
     @Column(columnDefinition = "enum")
     private Role role;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")

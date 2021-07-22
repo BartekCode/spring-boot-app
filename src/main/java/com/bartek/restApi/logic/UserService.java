@@ -4,9 +4,6 @@ import com.bartek.restApi.model.Role;
 import com.bartek.restApi.model.User;
 import com.bartek.restApi.model.projection.UserInfo;
 import com.bartek.restApi.repository.UserRepository;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +30,7 @@ public class UserService {
     }
 
 
-    public User findById(Long id){
+    public User findById(long id){
         Optional<User> user = userRepository.findById(id);
         return user.orElseThrow(() -> new NullPointerException("User with this id dont exist"));
     }

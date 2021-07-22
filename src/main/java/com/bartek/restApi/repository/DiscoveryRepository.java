@@ -10,10 +10,10 @@ import java.util.Optional;
 
 public interface DiscoveryRepository {
     List<Discovery> findAll();
-    Optional<Discovery> findById(Long id);
+    Optional<Discovery> findById(int id);
     Discovery save(Discovery entity);
     boolean existsByDoneIsFalseAndCategory_Id(Long id);
     Page<Discovery> findAll(Pageable pageable);
-    boolean existsById(Long id);
+    boolean existsById(int id);
     Optional<Discovery>findByTitle(String title);
 }

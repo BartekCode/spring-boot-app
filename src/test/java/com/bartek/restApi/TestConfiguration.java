@@ -25,7 +25,7 @@ public class TestConfiguration {
                 return new ArrayList<>(discoveries.values());
             }
             @Override
-            public Optional<Discovery> findById(Long id) {
+            public Optional<Discovery> findById(int id) {
                 return Optional.ofNullable(discoveries.get(id));
             }
             @Override
@@ -40,11 +40,11 @@ public class TestConfiguration {
             public Page<Discovery> findAll(Pageable pageable) {
                 return null;
             }
+
             @Override
-            public boolean existsById(Long id) {
+            public boolean existsById(int id) {
                 return discoveries.containsKey(id);
             }
-
             @Override
             public Optional<Discovery> findByTitle(String title) {
                 return Optional.empty();

@@ -28,4 +28,13 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+
+
+    public Comment(LocalDateTime dateAdded, @NotBlank(message = "Comments's descritpion must be not empty") String description, Discovery discovery, User user) {
+        this.dateAdded = dateAdded;
+        this.description = description;
+        this.discovery = discovery;
+        this.user = user;
+    }
 }

@@ -40,7 +40,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<?> findCategoryById(@PathVariable long id){
+    ResponseEntity<?> findCategoryById(@PathVariable int id){
         if (categoryRepository.findById(id).isPresent()){
             return ResponseEntity.ok(discoveryRepository.findById(id));
         }

@@ -53,4 +53,9 @@ public Discovery addDiscovery(Discovery discovery, long categoryId) {
          return byTitle.orElseThrow(()-> new Exception("Discovery not found"));
      }
 
+     public Discovery findById(int id){
+         Optional<Discovery> discoveryRepositoryById = discoveryRepository.findById(id);
+         return discoveryRepositoryById.orElseThrow(()-> new NullPointerException("Discovery not found"));
+     }
+
 }

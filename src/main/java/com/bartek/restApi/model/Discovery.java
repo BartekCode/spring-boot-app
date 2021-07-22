@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity
@@ -37,6 +38,9 @@ public class Discovery{
     private User user;
     @Embedded
     private Audit audit = new Audit();
+
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "discovery")
+    private List<Comment> comments;
 
 
     public Discovery(@NotBlank(message = "Discovery's title must be not empty") String title, @NotBlank(message = "Discovery's descritpion must be not empty") String description, String url, LocalDateTime dateAdd) {

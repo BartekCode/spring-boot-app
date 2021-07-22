@@ -20,6 +20,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 //} po usunieciu Data rest nie ma mozliwosci tworzenia takich metod z RestResource
 
     List<Category>findAll();
-    Optional<Category>findById(Long id);
+    Optional<Category>findById(int id);
     Category save(Category entity);
 }
