@@ -5,7 +5,7 @@ create table users(
                       last_name varchar (25) not null ,
                       email varchar (100) not null ,
                       password varchar (200) not null,
-                      role enum ('USER', 'ADMIN') not null
+                      role enum ('ADMIN', 'USER') not null
 );
 
 alter table discoveries add column user_id int null;

@@ -1,6 +1,6 @@
 package com.bartek.restApi.adapter;
 
-import com.bartek.restApi.model.Role;
+import com.bartek.restApi.security.Role;
 import com.bartek.restApi.model.User;
 import com.bartek.restApi.repository.UserRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,5 +26,8 @@ public interface SqlUserRepository extends UserRepository, JpaRepository <User, 
     User save(User user);
 
     @Override
-    Optional<User> findById(Long id);
+    Optional<User> findById(int id);
+
+    @Override
+    void deleteById(int id);
 }
