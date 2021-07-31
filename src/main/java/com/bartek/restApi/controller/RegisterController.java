@@ -31,7 +31,8 @@ public class RegisterController {
     }
 
     @Transactional
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     ResponseEntity<User> deleteUser(@PathVariable("id") Integer userId) {
         if (userService.existById(userId)) {
             userService.deleteUser(userId);
@@ -46,4 +47,6 @@ public class RegisterController {
         userService.addAdmin(user);
         return ResponseEntity.created(URI.create("/" + user.getId())).body(user);
     }
+
+
 }

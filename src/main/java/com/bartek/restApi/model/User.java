@@ -83,4 +83,13 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public void updateFrom(User source){
+        firstName = source.firstName;
+        lastName = source.lastName;
+        email = source.email;
+    }
+
 }
+
+

@@ -92,6 +92,6 @@ public class UserService implements UserDetailsService {
     // by ustawic co jest loginem haslem itp
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findByEmail(email)
-                .orElseThrow(()-> new UsernameNotFoundException("User not found"));
+                .orElseThrow(()-> new UsernameNotFoundException((String.format("Username %s not found", email))));
     }
 }
