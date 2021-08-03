@@ -1,31 +1,36 @@
 package com.bartek.restApi.security;
 
 import com.bartek.restApi.logic.UserService;
+import com.bartek.restApi.security.jwt.JwtConfig;
+import com.bartek.restApi.security.jwt.JwtTokenVerifier;
+import com.bartek.restApi.security.jwt.JwtUsernameAndPasswordAuthenticationFilter;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.config.http.SessionCreationPolicy;
 
-import java.util.concurrent.TimeUnit;
+import javax.crypto.SecretKey;
 
 @Configuration
 @EnableWebSecurity
+@EnableConfigurationProperties
 public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private final SecretKey secretKey;
+    private final JwtConfig jwtConfig;
 
-    public SecurityConfiguration(UserService userService, PasswordEncoder passwordEncoder) {
+    public SecurityConfiguration(UserService userService, PasswordEncoder passwordEncoder, SecretKey secretKey, JwtConfig jwtConfig) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+        this.secretKey = secretKey;
+        this.jwtConfig = jwtConfig;
     }
 
     @Override
@@ -36,34 +41,43 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
 // spowrotem by umowliżwic dany request, dodatkowe zabezpieczenie
                 //oczywsice spring robi to sam za nas ale jak wszystko mozemy nadpisac po swojemu
                 .csrf().disable() //my uzywamy obecnie tylko postmana do odpytek to mozemy wyłączyc
+                .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))//nasz 1 filter
+                //mamy dostep do authenticationManager bo rozszerzamy naszą klasę o WebSecurityConfigAdapter
+                .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig), JwtUsernameAndPasswordAuthenticationFilter.class)
+                //token filter jest po userNameandPass filter
                 .authorizeRequests()
                 .antMatchers("/", "/register/**").permitAll()
 //                .antMatchers(HttpMethod.GET,"/users/**").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name())
 //                .antMatchers(HttpMethod.DELETE, "/users/**").hasAuthority(Role.ADMIN.name())
                 // dodalismy autoryzacje przy metodach w controllerach przy uzyciu @PreAuthorized
                 .anyRequest()
-                .authenticated()
-                .and()
-//                .httpBasic();//basic authentication
-                .formLogin() //form based authentication
-                    .loginPage("/login").permitAll() //adres do naszego formularza loginu
-                    .defaultSuccessUrl("/discoveriesSite", true) //po poprawnym login redirect tutaj
-                    .passwordParameter("password") //jezeli chdemy zmienic nazwe parametru hasla i username
-                    .usernameParameter("username")
-                .and()
-                .rememberMe().tokenValiditySeconds((int)TimeUnit.DAYS.toSeconds(21))
-                  //default na 2 tyg ale mozemy napdisac na inny czas tutaj np na 21 dni
-                .key("somethingverysecured") //key do hashowania danych zapisanych w sesji czyli username i expiration time
-                .rememberMeParameter("remember-me")//to samo dla remember me wspialismy default ale tak mozemy zmienic
-                // nazwe tego parametru
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-//              .logoutRequestMatcher(new AntPathRequestMatcher("/logut", "GET")) jezeli chcemy by z on CSRF logout bylo robione GET
-                .clearAuthentication(true) //czyscimy Auth
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID","remember-me") //jakie ciasteczka usuwamy po wylogowaniu
-                .logoutSuccessUrl("/login"); //po wylogowaniu wchodzimy do login
+                .authenticated();
+
+        // WSZYSTKO PONIZEJ DODAJEMY W KOMENTARZ I KORZYSTAWMY Z JWT
+//                .and()
+////                .httpBasic();//basic authentication
+//                .formLogin() //form based authentication
+//                    .loginPage("/login").permitAll() //adres do naszego formularza loginu
+//                    .defaultSuccessUrl("/discoveriesSite", true) //po poprawnym login redirect tutaj
+//                    .passwordParameter("password") //jezeli chdemy zmienic nazwe parametru hasla i username
+//                    .usernameParameter("username")
+//                .and()
+//                .rememberMe().tokenValiditySeconds((int)TimeUnit.DAYS.toSeconds(21))
+//                  //default na 2 tyg ale mozemy napdisac na inny czas tutaj np na 21 dni
+//                .key("somethingverysecured") //key do hashowania danych zapisanych w sesji czyli username i expiration time
+//                .rememberMeParameter("remember-me")//to samo dla remember me wspialismy default ale tak mozemy zmienic
+//                // nazwe tego parametru
+//                .and()
+//                .logout()
+//                .logoutUrl("/logout")
+////              .logoutRequestMatcher(new AntPathRequestMatcher("/logut", "GET")) jezeli chcemy by z on CSRF logout bylo robione GET
+//                .clearAuthentication(true) //czyscimy Auth
+//                .invalidateHttpSession(true)
+//                .deleteCookies("JSESSIONID","remember-me") //jakie ciasteczka usuwamy po wylogowaniu
+//                .logoutSuccessUrl("/login"); //po wylogowaniu wchodzimy do login
 
 
     }

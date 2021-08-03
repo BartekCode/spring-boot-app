@@ -34,7 +34,7 @@ public class User implements UserDetails {
     private String email;
     @NotEmpty
      //Jackson’s @JsonIgnore is used to prevent the password field from being serialized into JSON.
-    @JsonIgnore
+//    @JsonIgnore
     private String password;
     @Enumerated
     @Column(columnDefinition = "enum")
@@ -62,6 +62,11 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return email;
+    }
+
+    @Override
+    public String getPassword(){
+        return password;
     }
 
     @Override

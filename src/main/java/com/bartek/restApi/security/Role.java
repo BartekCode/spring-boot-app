@@ -25,5 +25,10 @@ public enum Role  implements GrantedAuthority {
     public Set<ApplicationUserPermissions> getPermissions() {
         return permissions;
     }
+
+
+
+
+
 }
 
