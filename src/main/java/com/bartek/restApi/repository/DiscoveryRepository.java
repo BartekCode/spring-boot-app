@@ -1,11 +1,13 @@
 package com.bartek.restApi.repository;
 
 import com.bartek.restApi.model.Discovery;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
+
 
 
 public interface DiscoveryRepository {
