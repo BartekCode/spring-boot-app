@@ -66,6 +66,12 @@ public class Discovery{
         this.description = description;
     }
 
+    public Discovery(@NotBlank(message = "Discovery's title must be not empty") String title, @NotBlank(message = "Discovery's descritpion must be not empty") String description, LocalDateTime dateAdd) {
+        this.title = title;
+        this.description = description;
+        this.dateAdd = dateAdd;
+    }
+
     public void updateFrom(final Discovery source){
         title = source.title;
         description = source.description;

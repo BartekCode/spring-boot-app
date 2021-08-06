@@ -41,6 +41,11 @@ public class DiscoveryController {
         return ResponseEntity.ok(discoveryRepository.findAll(pageable).getContent());
     }
 
+    @GetMapping("/{id}")
+    ResponseEntity<Discovery> readDiscById(@PathVariable("id")int id){
+        return ResponseEntity.ok(discoveryRepository.findById(id).orElseThrow());
+    }
+
     @Transactional
     @PutMapping("/{id}")//Requestbody to co dostaniemy zdeserializuj na obiekt javovy
     ResponseEntity<?> updateDiscovery(@PathVariable("id") int id, @RequestBody @Valid Discovery toUpdate){

@@ -62,10 +62,10 @@ class DiscoveryControllerE2ETest {
         ResponseEntity<Discovery[]> exchange = testRestTemplate.exchange("http://localhost:" + port + "/discoveries",
                 HttpMethod.GET, jwt, Discovery[].class); //ponizej zapytanie z utworzeniem tablicy
         List<Discovery> discoveries = rateResponse.getBody(); //lista
-        Discovery[] body = exchange.getBody(); //tablica
+        Discovery[] result = exchange.getBody(); //tablica
 
         //then
         assertEquals(discoveries.size(), initial+2);
-        assertEquals(body.length, initial+2);
+        assertEquals(result.length, initial+2);
     }
 }

@@ -42,10 +42,6 @@ public class TestConfiguration {
             public Optional<Discovery> findById(int id) {
                 return Optional.ofNullable(discoveries.get(id));
             }
-//            @Override
-//            public Discovery save(Discovery entity) {
-//                return discoveries.put(discoveries.size()+1,entity);
-//            }
             @Override
             public boolean existsByDoneIsFalseAndCategory_Id(Long id) {
                 return false;

@@ -63,7 +63,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                 .signWith(secretKey)
                 .compact();
 
-//        response.addHeader("Authorization", "Bearer "+token); //wysyłamy token do clienta
+//        response.addHeader("Authorization", "Bearer "+token); //wysyłamy token do clienta bedzie mozna go wtedy pobrac z nagłówków np w postmanie
         response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix()+" "+token);//poprawiamy z uzyciem jwtConfig
         //                zwara nagłówek Autoryzacja                         a tutaj utworzony w properites prefix
     }
