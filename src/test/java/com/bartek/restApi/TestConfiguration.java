@@ -17,6 +17,7 @@ import java.util.*;
 public class TestConfiguration {
 
 
+
     @Bean
     @Primary
     @Profile("!integration")//profil nie integracyjny
@@ -25,6 +26,8 @@ public class TestConfiguration {
         var result = new DriverManagerDataSource("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "sa","");
         result.setDriverClassName("org.h2.Driver");
         return result;
+
+
     }
 
     @Bean
@@ -58,6 +61,11 @@ public class TestConfiguration {
             @Override
             public Optional<Discovery> findByTitle(String title) {
                 return Optional.empty();
+            }
+
+            @Override
+            public List<Discovery> findByDone(boolean state) {
+                return null;
             }
 
             @Override

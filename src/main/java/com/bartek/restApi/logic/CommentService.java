@@ -2,7 +2,6 @@ package com.bartek.restApi.logic;
 
 import com.bartek.restApi.model.Comment;
 import com.bartek.restApi.model.Discovery;
-import com.bartek.restApi.model.User;
 import com.bartek.restApi.repository.CommentRepository;
 import com.bartek.restApi.repository.DiscoveryRepository;
 import org.springframework.stereotype.Service;
@@ -11,7 +10,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 public class CommentService {

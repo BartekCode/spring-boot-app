@@ -5,11 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
 @RestController
+@RequestMapping("/info")
 public class InfoController {
 
 //    @Autowired //wstrzykiwanie przez pole, tylko spring tak wstrzykuje dlatego przez to mocno sie z nim wiążemy
@@ -21,12 +23,12 @@ public class InfoController {
         this.myProp = myProp;
     }
 
-    @GetMapping("/info/url")
+    @GetMapping("/url")
     String url(){
         return dataSource.getUrl(); // wtaki sposob nie zrobimy literowki
     }//Return the configured url or null if none was configured.
 
-    @GetMapping("/info/prop") //czyli wpisując teraz taki adres powinnismy dostac false bo tak ustawilismy w properties
+    @GetMapping("/prop") //czyli wpisując teraz taki adres powinnismy dostac false bo tak ustawilismy w properties
     boolean myProp(){
         return myProp.getTemplate().isAllowMultipleDiscoveries();
     }

@@ -1,7 +1,6 @@
 package com.bartek.restApi.repository;
 
 import com.bartek.restApi.model.Discovery;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -18,4 +17,5 @@ public interface DiscoveryRepository {
     Page<Discovery> findAll(Pageable pageable);
     boolean existsById(int id);
     Optional<Discovery>findByTitle(String title);
+    List<Discovery> findByDone(boolean state);
 }

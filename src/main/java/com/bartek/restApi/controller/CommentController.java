@@ -4,18 +4,13 @@ import com.bartek.restApi.logic.CommentService;
 import com.bartek.restApi.logic.DiscoveryService;
 import com.bartek.restApi.logic.UserService;
 import com.bartek.restApi.model.Comment;
-import com.bartek.restApi.model.Discovery;
-import com.bartek.restApi.model.User;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("comments")

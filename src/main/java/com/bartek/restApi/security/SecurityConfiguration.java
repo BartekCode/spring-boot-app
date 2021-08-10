@@ -4,6 +4,8 @@ import com.bartek.restApi.logic.UserService;
 import com.bartek.restApi.security.jwt.JwtConfig;
 import com.bartek.restApi.security.jwt.JwtTokenVerifier;
 import com.bartek.restApi.security.jwt.JwtUsernameAndPasswordAuthenticationFilter;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +28,7 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
     private final SecretKey secretKey;
     private final JwtConfig jwtConfig;
 
+    @Autowired
     public SecurityConfiguration(UserService userService, PasswordEncoder passwordEncoder, SecretKey secretKey, JwtConfig jwtConfig) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;

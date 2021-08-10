@@ -7,13 +7,16 @@ import com.bartek.restApi.repository.DiscoveryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
@@ -30,12 +33,37 @@ public class DiscoveryController {
         this.discoveryRepository = discoveryRepository;
         this.discoveryService = discoveryService;
     }
+
+    @GetMapping(value = "/search/done", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<List<Discovery>> readDoneDiscoveries (@RequestParam(defaultValue = "true") boolean state) { //@RequestParam parametr zadania
+        //jezeli nie podamy paramteru state to bedziemy szukacj deafultValue czyli true a np mozemy szukac false jak podamy
+        return ResponseEntity.ok(discoveryRepository.findByDone(state));
+    }
+
+        @GetMapping("/test") //przed springiem jakbysmy chcieli sie odowlac do request i response dają rozne niskopoziomowe mechanizmy
+                void oldFashionedWay(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+                   req.getUserPrincipal(); //pobranie zalogowanego usera
+                   req.getParameter("foo"); //pobranie paramtetru
+                   resp.getWriter().println("test old-fashioned way");
+        }
+
+//    @GetMapping(value = "/search/done", produces = MediaType.APPLICATION_JSON_VALUE)
+//    String foo (){
+//        return "";
+     //działało by to w ten sposób jezEl ktos wysle pod ten adres rządanie http z nagłowkiem accept aaplication Json to trafi do foo
+  //  jak accept  text Xml to do bar
+
+    @GetMapping(value = "/search/done", produces = MediaType.TEXT_XML_VALUE)
+    String bar (){
+        return "";
+    }
+
     @GetMapping( params = {"!sort", "!page", "!size"})
     ResponseEntity <List<Discovery>> readAllDiscoveries(){
         logger.warn("Exposing all discoveries");
         return ResponseEntity.ok(discoveryRepository.findAll());
     }
-    @GetMapping(value = "/discoveries")
+    @GetMapping
     ResponseEntity <List<Discovery>> readAllDiscoveries(Pageable pageable){
         logger.info("Custom pageable");
         return ResponseEntity.ok(discoveryRepository.findAll(pageable).getContent());

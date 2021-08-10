@@ -2,7 +2,6 @@ package com.bartek.restApi.adapter;
 
 import com.bartek.restApi.model.Discovery;
 import com.bartek.restApi.repository.DiscoveryRepository;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
